@@ -1,0 +1,15 @@
+# Testing
+pytest
+pytest-asyncio
+pytest-html
+httpx
+
+# Linting and formatting
+flake8
+black
+isort
+mypy
+
+# Git hooks
+pre-commit
+

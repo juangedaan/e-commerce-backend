@@ -1,0 +1,20 @@
+
+[flake8]
+max-line-length = 88
+extend-ignore = E203, W503
+exclude = 
+    .git,
+    __pycache__,
+    venv,
+    env,
+    .venv,
+    build,
+    dist,
+    migrations,
+    assets
+
+# Explanation:
+# max-line-length = 88 to match Black's line wrapping
+# E203 and W503 are ignored because they conflict with Black formatting
+# Exclude common folders I don't want to lint
+
