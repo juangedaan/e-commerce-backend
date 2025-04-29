@@ -105,7 +105,7 @@ e-commerce/
 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/social-commerce-backend.git
+git clone https://github.com/juangedaan/social-commerce-backend.git
 cd social-commerce-backend
 ```
 
