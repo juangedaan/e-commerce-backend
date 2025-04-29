@@ -218,4 +218,4 @@ See [deployment/aws-deployment.md](deployment/aws-deployment.md) for detailed cl
 
 ## 📄 License
 
-MIT License © [Your Name]
+MIT License © Juan Moreno
