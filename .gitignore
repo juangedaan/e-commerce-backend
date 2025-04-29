@@ -70,10 +70,6 @@ dist/
 build/
 site/
 
-# Diagrams and other generated assets (optional)
-*.png
-diagram.png
-
 # Data
 *.csv
 *.tsv
