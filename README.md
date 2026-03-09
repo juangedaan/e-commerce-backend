@@ -1,39 +1,57 @@
 # 🛍️ Social Commerce Backend & Recommendation Engine
 
-This project provides a minimal **social commerce backend** implemented with FastAPI. It supports user management, product catalog, order processing, and a simple rule‑based recommendation endpoint.
+This project provides a comprehensive **social commerce backend** implemented with FastAPI. It supports user management, product catalog, shopping carts, reviews, order processing, authentication simulation, and advanced collaborative filtering recommendations.
 
-The goal is to demonstrate core API functionality in a lightweight, easy‑to‑run package.
+The goal is to demonstrate full e-commerce API functionality in a scalable, easy‑to‑run package.
 
 ```mermaid
-flowchart LR
-    Client[Client App]
-    subgraph Backend
-      API[FastAPI API]
-      Rec[Recommendation Engine]
-    end
-    subgraph Storage
-      DB[(In-memory data)]
-    end
-    Client --> API
-    API --> DB
-    API --> Rec
-    Rec --> DB
+flowchart TD
+    Client[Client App] --> Auth[Authentication]
+    Auth --> Users[User Management]
+    Auth --> Products[Product Catalog]
+    Auth --> Cart[Shopping Cart]
+    Auth --> Orders[Order Processing]
+    Auth --> Reviews[Product Reviews]
+    Auth --> Recs[Recommendations]
+
+    Users --> DB[(In-memory Store)]
+    Products --> DB
+    Cart --> DB
+    Orders --> DB
+    Reviews --> DB
+    Recs --> DB
+
+    Recs --> Collaborative[Collaborative Filtering]
+    Collaborative --> SimilarUsers[Find Similar Users]
+    SimilarUsers --> Purchased[Exclude Purchased]
+    Purchased --> Scored[Score by Reviews]
+    Scored --> TopRecs[Top Recommendations]
+
+    Orders --> Recs
+    Reviews --> Recs
+
+    DB --> Analytics[Analytics & Insights]
+    Analytics --> Client
 ```
 
 ---
 
 ## 🚀 Features
 
-- Lightweight FastAPI backend with in-memory data store
-- Endpoints for users, products, orders and recommendations
-- Simple rule‑based recommendation logic
-- Easy to run locally without external dependencies
+- Comprehensive FastAPI backend with in-memory data store
+- User authentication simulation with session tokens
+- Product catalog with categories and descriptions
+- Shopping cart management
+- Product reviews and ratings
+- Order processing with total calculation
+- Advanced collaborative filtering recommendations
+- RESTful API endpoints with proper error handling
 
 ---
 
 ## 🧱 Architecture Overview
 
-The application consists of a single FastAPI service that maintains data in memory. A client interacts with the API over HTTP; recommendations are calculated on the fly.
+The application consists of a single FastAPI service that maintains data in memory. A client interacts with the API over HTTP; recommendations use collaborative filtering based on user purchase history and reviews.
 
 ---
 
@@ -156,7 +174,7 @@ make test-html
 
 ## ☁️ Deploy to AWS
 
-See [deployment/aws-deployment.md](deployment/aws-deployment.md) for detailed cloud deployment instructions.
+Refer to the repository wiki for any cloud deployment notes (deployment directory was removed in this simplified version).
 
 ---
 
