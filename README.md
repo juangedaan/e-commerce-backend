@@ -6,32 +6,29 @@ The goal is to demonstrate full e-commerce API functionality in a scalable, easy
 
 ```mermaid
 flowchart TD
-    Client[Client App] --> Auth[Authentication]
-    Auth --> Users[User Management]
-    Auth --> Products[Product Catalog]
-    Auth --> Cart[Shopping Cart]
-    Auth --> Orders[Order Processing]
-    Auth --> Reviews[Product Reviews]
-    Auth --> Recs[Recommendations]
+    Client[Client App] --> API[FastAPI Service]
+    API --> Users[Users]
+    API --> Products[Product Catalog]
+    API --> Carts[Carts]
+    API --> Reviews[Reviews]
+    API --> Orders[Orders]
+    API --> Purchases[Purchases]
+    API --> Recs[Recommendations]
 
     Users --> DB[(In-memory Store)]
     Products --> DB
-    Cart --> DB
-    Orders --> DB
+    Carts --> DB
     Reviews --> DB
-    Recs --> DB
-
-    Recs --> Collaborative[Collaborative Filtering]
-    Collaborative --> SimilarUsers[Find Similar Users]
-    SimilarUsers --> Purchased[Exclude Purchased]
-    Purchased --> Scored[Score by Reviews]
-    Scored --> TopRecs[Top Recommendations]
+    Orders --> DB
+    Purchases --> DB
 
     Orders --> Recs
     Reviews --> Recs
 
-    DB --> Analytics[Analytics & Insights]
-    Analytics --> Client
+    Recs --> SimilarUsers[Find users with overlapping orders]
+    SimilarUsers --> Candidates[Their products, minus already purchased]
+    Candidates --> Ranked[Rank by review ratings]
+    Ranked --> TopRecs[Top 5 recommendations]
 ```
 
 ---
