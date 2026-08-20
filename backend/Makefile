@@ -31,9 +31,9 @@ prune:
 
 # Run full test suite with clean output and durations
 test:
-	pytest --tb=short --durations=5 -q backend/tests
+	pytest --tb=short --durations=5 -q tests
 
 # Run tests and generate HTML report
 test-html:
-	pytest --html=report.html --self-contained-html backend/tests
+	pytest --html=report.html --self-contained-html tests
 

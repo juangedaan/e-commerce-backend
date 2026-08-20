@@ -18,11 +18,16 @@ carts = []
 reviews = []
 sessions = {}
 
+# in-memory store (continued)
+purchases = []
+
 # Data models
-class User(BaseModel):
-    id: int
-    name: str
+class UserCreate(BaseModel):
+    username: str
     email: str
+
+class User(UserCreate):
+    id: int
 
 class Product(BaseModel):
     id: int
@@ -35,7 +40,7 @@ class Order(BaseModel):
     id: int
     user_id: int
     product_ids: List[int]
-    total: float
+    total: float = 0.0
     status: str = "pending"
 
 class CartItem(BaseModel):
@@ -77,15 +82,23 @@ def read_root():
 
 # user endpoints
 @app.post("/users/", response_model=User)
-def create_user(user: User):
+def create_user(user: UserCreate):
     if any(u.email == user.email for u in users):
         raise HTTPException(status_code=400, detail="Email already exists")
-    users.append(user)
-    return user
+    new_user = User(id=len(users) + 1, **user.dict())
+    users.append(new_user)
+    return new_user
 
 @app.get("/users/", response_model=List[User])
 def list_users():
     return users
+
+@app.get("/users/{user_id}", response_model=User)
+def get_user(user_id: int):
+    for u in users:
+        if u.id == user_id:
+            return u
+    raise HTTPException(status_code=404, detail="User not found")
 
 # product endpoints
 @app.post("/products/", response_model=Product)
@@ -146,6 +159,21 @@ def create_order(order: Order):
 @app.get("/orders/", response_model=List[Order])
 def list_orders():
     return orders
+
+# purchase endpoints
+class Purchase(BaseModel):
+    user_id: int
+    product_id: int
+    quantity: int
+
+@app.post("/purchases/", response_model=Purchase)
+def create_purchase(purchase: Purchase):
+    purchases.append(purchase)
+    return purchase
+
+@app.get("/purchases/user/{user_id}", response_model=List[Purchase])
+def get_user_purchases(user_id: int):
+    return [p for p in purchases if p.user_id == user_id]
 
 # advanced recommendation endpoint
 @app.get("/recommendations/{user_id}")

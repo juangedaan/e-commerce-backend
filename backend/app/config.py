@@ -1,19 +1,13 @@
-from pydantic import BaseSettings
+import os
 
 
-class Settings(BaseSettings):
-    # Database
-    database_url: str
+class Settings:
+    """Minimal settings loaded from environment variables."""
 
-    # AWS
-    aws_region: str = "us-west-2"
-
-    # Other configs (e.g., API keys) can go here later
-
-    class Config:
-        env_file = ".env"  # Load from .env automatically
+    def __init__(self):
+        self.database_url: str = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+        self.aws_region: str = os.getenv("AWS_REGION", "us-west-2")
 
 
 # Singleton settings object
 settings = Settings()
-
